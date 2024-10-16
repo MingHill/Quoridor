@@ -12,16 +12,19 @@ public class QuoridorBoard extends Board{
     private void initializeFences(){
         for (int r = 0; r < this.getSize(); r++){
             for (int c = 0; c < this.getSize(); c++){
+
                 Coordinate c1 = new Coordinate(r, c);
                 Coordinate c2 = new Coordinate(r + 1, c);
                 FenceCoordinate f1 = new FenceCoordinate(c1, c2);
                 this.HorizontalFences.put(f1, new Fence(false, f1));
                 System.out.println("H: Inserted " + c1 + " " + c2);
 
-                Coordinate c3 = new Coordinate(r, c);
-                Coordinate c4 = new Coordinate(r, c + 1);
-                FenceCoordinate f2 = new FenceCoordinate(c1, c2);
-                this.VerticalFences.put(f2, new Fence(true, f2));
+                if (c < this.getSize() - 1) {
+                    Coordinate c3 = new Coordinate(r, c);
+                    Coordinate c4 = new Coordinate(r, c + 1);
+                    FenceCoordinate f2 = new FenceCoordinate(c3, c4);
+                    this.VerticalFences.put(f2, new Fence(true, f2));
+                }
             }
         }
     }
