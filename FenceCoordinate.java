@@ -22,7 +22,9 @@ public class FenceCoordinate {
         }
     }
 
-    public boolean equals(FenceCoordinate other){
+    @Override
+    public boolean equals(Object obj){
+        FenceCoordinate other = (FenceCoordinate) obj;
         return this.coordinate_one.equals(other.coordinate_one) && this.coordinate_two.equals(other.coordinate_two);
     }
 }

@@ -37,7 +37,8 @@ public class Fence {
         }
     }
 
-    public boolean equals(Fence other){
+    public boolean equals(Object obj){
+        Fence other = (Fence) obj;
         return this.coord.equals(other.coord);
     }
 
