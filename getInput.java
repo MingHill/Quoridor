@@ -24,10 +24,10 @@ public final class getInput {
     }
 
     public static int chooseGame(){
-        System.out.println("Input 1 to play TicTacToe | Input 2 to play Order & Chaos | Input 3 to player Super TicTacToe");
+        System.out.println("Input 1 to play TicTacToe \nInput 2 to play Order & Chaos \nInput 3 to player Super TicTacToe \nInput 4 to play Quoridor ");
         Scanner input = new Scanner(System.in);
         String game = input.nextLine();
-        while(!(game.equals("1") || game.equals("2") || game.equals("3"))){
+        while(!(game.equals("1") || game.equals("2") || game.equals("3") || game.equals("4"))){
             System.out.println("Please enter a valid input: ");
             input = new Scanner(System.in);
             game = input.nextLine();

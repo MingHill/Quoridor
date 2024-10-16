@@ -36,8 +36,6 @@ public class Coordinate {
         return new Coordinate(r, c);
     }
 
-
-
     public int getRow(){
         return this.row;
     }
@@ -45,7 +43,5 @@ public class Coordinate {
     public int getCol(){
         return this.col;
     }
-
-
 
 }

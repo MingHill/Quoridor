@@ -54,25 +54,25 @@ public class Board{
     }
 
     public String toString(){
-        String output = "   ";
+        String output = "    ";
         for(int i = 0; i < this.board_size; i++){
-            output = output + (i + 1) + "  ";
+            output = output + (i + 1) + "   ";
         }
         output = output + "\n";
         String line = "  ";
         for(int i = 0; i < this.board_size; i++){
-            line = line + "+--";
+            line = line + "+---";
         }
         line = line;
 
         for (int r = 0; r < this.board_size; r++){
             output = output + line + "+\n" + (r + 1);
             for(int c = 0; c < this.board_size; c++){
-                output = output + " |" + this.board[r][c].toString();
+                output = output + " | " + this.board[r][c].toString();
             }
             output = output + " |\n";
         }
-        output = output + line;
+        output = output + line + "+";
         return output;
     }
 

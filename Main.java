@@ -19,8 +19,12 @@ public class Main {
                 board = new TicTacToeBoard(size);
             }else if (game == 3){
                 board = new SuperTicTacToe(3);
-            }else{
+            }else if (game == 2){
                 board = new OrderandChaosBoard();
+            }else{
+                board = new QuoridorBoard();
+                System.out.println(board.toString());
+                System.exit(0);
             }
             Interface newgame = new Interface(board, game);
             newgame.startGame();
