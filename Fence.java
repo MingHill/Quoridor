@@ -32,7 +32,7 @@ public class Fence {
             if (this.block){
                 return ANSI_RED +  "+###" + ANSI_RESET;
             }else{
-                return "+***";
+                return "+---";
             }
         }
     }

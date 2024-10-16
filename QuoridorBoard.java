@@ -17,7 +17,6 @@ public class QuoridorBoard extends Board{
                 Coordinate c2 = new Coordinate(r + 1, c);
                 FenceCoordinate f1 = new FenceCoordinate(c1, c2);
                 this.HorizontalFences.put(f1, new Fence(false, f1));
-                System.out.println("H: Inserted " + c1 + " " + c2);
 
                 if (c < this.getSize() - 1) {
                     Coordinate c3 = new Coordinate(r, c);
@@ -35,9 +34,8 @@ public class QuoridorBoard extends Board{
             Coordinate c1 = new Coordinate(r, c);
             Coordinate c2 = new Coordinate(r + 1, c);
             FenceCoordinate f1 = new FenceCoordinate(c1, c2);
-            System.out.println("Getting: " + c1 + " " + c2);
             Fence fence = this.HorizontalFences.get(f1);
-            line = line + "+" + fence.toString();
+            line = line + fence.toString();
         }
         line = line + "+";
         return line;
@@ -64,32 +62,4 @@ public class QuoridorBoard extends Board{
         output = output + this.printRow(this.getSize() - 1) + "+";
         return output;
     }
-//
-//    public String toString(){
-//        String output = "       ";
-//        for(int i = 0; i < this.board_size; i++){
-//            output = output + (i + 1) + "   ";
-//        }
-//        output = output + "\n";
-//        String line = "     ";
-//        for(int i = 0; i < this.board_size; i++){
-//            line = line + "+---"; // change to its own object
-//        }
-//        line = line;
-//        for (int r = 0; r < this.board_size; r++){
-//            output = output + line + "+\n   " + (r);
-//            for(int c = 0; c < this.board_size; c++){
-//                output = output + " | " + this.board[r][c].toString();
-//            }
-//            if (r == 0 || r == this.getSize() - 1){
-//                output = output + " | END \n";
-//            }else {
-//                output = output + " |\n";
-//            }
-//        }
-//        output = output + line + "+";
-//        return output;
-//    }
-
-
 }
