@@ -1,4 +1,8 @@
 public class Fence {
+
+    // Fence object that represents a wall on the board
+
+
     private boolean block;
     private final boolean vert;
     private final FenceCoordinate coord;
@@ -26,13 +30,13 @@ public class Fence {
             if (this.block){
                 return ANSI_RED +  "#" + ANSI_RESET;
             }else{
-                return "|";
+                return ANSI_BLUE + "|" + ANSI_RESET;
             }
         }else{
             if (this.block){
                 return ANSI_RED +  "+###" + ANSI_RESET;
             }else{
-                return "+---";
+                return ANSI_BLUE + "+---" + ANSI_RESET;
             }
         }
     }

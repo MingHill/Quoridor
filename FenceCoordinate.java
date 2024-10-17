@@ -1,5 +1,9 @@
 import java.util.Objects;
 
+
+// FenceCoordinate object that take 2 tile coordinates as inputs
+
+
 public class FenceCoordinate {
     private Coordinate coordinate_one;
     private Coordinate coordinate_two;
