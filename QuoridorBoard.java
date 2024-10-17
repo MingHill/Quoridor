@@ -61,14 +61,16 @@ public class QuoridorBoard extends Board{
         output = output + "\n";
         for (int r = 0; r < this.board_size; r++){
             String currentRow = this.printRow(r);
-            output = output + currentRow + "+\n   " + (r);
+            output = output + currentRow + "+\n   " + (r + 1);
             for(int c = 0; c < this.board_size; c++){
 
                 String col = this.printColumn(r, c);
                 output = output + col + this.board[r][c].toString();
             }
-            if (r == 0 || r == this.getSize() - 1){
-                output = output + " | END \n";
+            if (r == 0){
+                output = output + " | P1 BASE \n";
+            }else if(r == this.getSize() - 1){
+                output = output + " | P2 BASE \n";
             }else {
                 output = output + " |\n";
             }
@@ -76,4 +78,26 @@ public class QuoridorBoard extends Board{
         output = output + this.printRow(this.getSize() - 1) + "+";
         return output;
     }
+
+    public void changeVertFence(FenceCoordinate[] newFences){
+        for(FenceCoordinate f : newFences){
+            Fence fence = this.VerticalFences.get(f);
+            if (fence != null){
+                fence.setBlock(true);
+            }
+            System.out.println("MADE CHANGE B");
+        }
+
+    }
+
+    public void changeHorizontalFence(FenceCoordinate[] newFences){
+        for(FenceCoordinate f : newFences){
+            Fence fence = this.HorizontalFences.get(f);
+            if (fence != null){
+                fence.setBlock(true);
+            }
+            System.out.println("MADE CHANGE A");
+        }
+    }
+
 }

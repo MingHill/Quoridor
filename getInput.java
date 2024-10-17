@@ -1,5 +1,8 @@
 import java.nio.file.FileAlreadyExistsException;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 // class to get all the input I/O from terminal
 
 public final class getInput {
@@ -94,14 +97,97 @@ public final class getInput {
         return new int[]{giantCoord[0], giantCoord[1], x, y};
     }
 
+    // Get user decision to play a wall or make a move
+    public static int inputMoveDecision(int walls_left){
+        if(walls_left < 1){
+            System.out.println("You don't have walls left, therefore you will make a move");
+            return 2;
+        }
+        System.out.println("To place a wall INPUT 1 | To make a move INPUT 2: ");
+        Scanner input = new Scanner(System.in);
+        String move = input.nextLine();
+        while(!(move.equals("1") || move.equals("2"))){
+            System.out.println("Please enter a valid move");
+            input = new Scanner(System.in);
+            move = input.nextLine();
+        }
+        return Integer.parseInt(move);
+    }
+
+    // Gets input for fence
+    public static String[] inputFence() {
+        System.out.println("Input the fence you want to block in the following format: ");
+        System.out.println("A (x1, y1) (x2, y2) b");
+        System.out.println("A : is either V (vertical fence) or H (horizontal fence) \n" +
+                "(x1, y1) (x2, y2) : the coordinates tiles that sandwich the walls  \n" +
+                "b : l (left) and r (right) for H, u (up) and d (down) for V of where you want the second wall to be placed");
+        Scanner input = new Scanner(System.in);
+        String fence = input.nextLine();
+        if (!isValidFenceFormat(fence)) {
+            input = new Scanner(System.in);
+            fence = input.nextLine();
+        }
+        return parseFence(fence);
+
+    }
+
+    // parses the inputed fence into String array
+    private static String[] parseFence(String fence) {
+        // Corrected regex with capturing groups
+        String regex = "^([VHvh]) \\((\\d+),(\\d+)\\) \\((\\d+),(\\d+)\\) ([lrudLRUD])$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(fence);
+
+        // Check if the matcher finds a match
+        if (matcher.matches()) {
+            // Correctly capture the groups
+            String orientation = matcher.group(1);  // V/H
+            String x1 = matcher.group(2);           // x1
+            String y1 = matcher.group(3);           // y1
+            String x2 = matcher.group(4);           // x2
+            String y2 = matcher.group(5);           // y2
+            String direction = matcher.group(6);    // l/r/u/d
+
+            return new String[]{orientation, x1, y1, x2, y2, direction};
+        } else {
+            throw new IllegalArgumentException("Invalid fence format");
+        }
+    }
+
+
+    // Checks if the inputted fence format matches the format asked for and check if V/H are accompanied with correct l/r/d/u
+    private static boolean isValidFenceFormat(String input){
+        String regex = "^[VHvh] \\(\\d+,\\d+\\) \\(\\d+,\\d+\\) [lrudLRUD]$";
+        if (!input.matches(regex)){
+            System.out.println("Please enter a valid format A (x1, y1) (x2, y2) b");
+            return false;
+        }
+        String[] parsed = parseFence(input);
+        String orientation = parsed[0];
+        String direction = parsed[5];
+        System.out.println(Arrays.toString(parsed));
+        while ((orientation.equalsIgnoreCase("V") && !(direction.equalsIgnoreCase("u") || direction.equalsIgnoreCase("d"))) ||
+                (orientation.equalsIgnoreCase("H") && !(direction.equalsIgnoreCase("l") || direction.equalsIgnoreCase("r")))) {
+            System.out.println("Please enter a valid orientation, V must be accompanied with u/d and H must be accompanied with l/r");
+            return false;
+        }
+        return true;
+    }
+
     //checks the validFormat for coordinates
     private static boolean isValidFormat(String input){
         return input.matches("\\d+,\\d+");
     }
 
+    // valid format for SuperTicTacToe
     private static boolean isValidFormatSuper(String input){
         return input.matches("[a-iA-I] \\d+,\\d+");
     }
+
+
+
+    // Input for either a wall or move
+
 
 }
 

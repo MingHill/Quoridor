@@ -106,4 +106,9 @@ public class Board{
             }
         }
     }
+
+    public void changeVertFence(FenceCoordinate[] newFences){}
+
+    public void changeHorizontalFence(FenceCoordinate[] newFences){}
+
 }

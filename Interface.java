@@ -37,12 +37,18 @@ public class Interface{
                 System.out.println("To place a marker down, please enter the coordinate in the following format: A x,y (x = row, y = column) and A is a value between A/a - I/i");
                 System.out.println("A = tictactoe board in (1,1) section, B = tictactoe board in (1,2) section etc while (x, y) is the tile on that certain board section");
                 break;
+            case 4:
+                currentGame = new QuoridorGamplay(this.board, this.player1, this.player2);
+                System.out.println("In Q game");
+                break;
+
         }
         System.out.println(this.board.toString());
 
         while(true){
             currentGame.makeMove(this.currentPlayer);
 
+            System.out.println("MADE FIRST MOVE");
             System.out.println(this.board.toString());
 
             int[] win_outcome = currentGame.check_win(this.currentPlayer);

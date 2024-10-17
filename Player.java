@@ -4,6 +4,8 @@ public class Player{
     protected int wins;
     protected String name;
     protected int GameID;
+    private int walls_left;
+    private Coordinate coord;
 
 
     public Player(int state, String player_name, int GameID){
@@ -11,8 +13,22 @@ public class Player{
         this.wins = 0;
         this.name = player_name;
         this.GameID = GameID;
+        this.walls_left = 10;
+        this.setPlayerCoordinate();
     }
 
+    private void setPlayerCoordinate(){
+        if (this.state == 1){
+            this.coord = new Coordinate(0,5);
+        }else{
+            this.coord = new Coordinate(9, 5);
+        }
+
+    }
+
+    public int getWalls_left(){return this.walls_left;}
+
+    public void decreaseWall_left(){this.walls_left -= 1;}
 
     public int getState(){
         return this.state;

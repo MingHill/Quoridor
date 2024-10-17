@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        src.Misc.AudioPlayer audio = new src.Misc.AudioPlayer("220870__diboz__ibrkr01.wav");
-        audio.loop();
+//        src.Misc.AudioPlayer audio = new src.Misc.AudioPlayer("220870__diboz__ibrkr01.wav");
+//        audio.loop();
         System.out.println("\nWelcome to Ming's Game Shop! We have three game to play today");
         boolean quit = false;
         while(!quit){
@@ -23,8 +23,6 @@ public class Main {
                 board = new OrderandChaosBoard();
             }else{
                 board = new QuoridorBoard();
-                System.out.println(board.toString());
-                System.exit(0);
             }
             Interface newgame = new Interface(board, game);
             newgame.startGame();
@@ -35,6 +33,6 @@ public class Main {
             }
 
         }
-        audio.stop();
+//        audio.stop();
     }
 }

@@ -5,6 +5,7 @@ public class SuperGamePlay extends GamePlay{
     private Player player2;
     private Player winner;
 
+
     public SuperGamePlay(Board board, Player player1, Player player2) {
         this.b = board;
         this.player1 = player1;
