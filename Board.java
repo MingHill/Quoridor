@@ -91,13 +91,9 @@ public class Board{
         return true;
     }
 
-    public boolean make_super_move(int gr, int gc, int r, int c, int state, Player currentplayer){
-        return true;
-    }
+    public boolean make_super_move(int gr, int gc, int r, int c, int state, Player currentplayer){return true;}
 
-    public Board get_win_board(){
-        return null;
-    }
+    public Board get_win_board(){return null;}
 
     public void fill_board(int state){
         for (int r = 0; r < this.board_size; r++){

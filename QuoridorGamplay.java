@@ -15,10 +15,30 @@ public class QuoridorGamplay extends GamePlay{
         return new Player(0, "0", 0);
     }
 
+
+    /** Checks win condition by getting the current players and checking if they
+    are in the winning row **/
     public int[] check_win(Player currentPlayer){
         int state = currentPlayer.getState();
-
-        return new int[] {1};
+        Coordinate playerCoordinate = null;
+        int row;
+        switch (state){
+            case 1:
+                playerCoordinate = player1.getPlayerCoordinate();
+                row = playerCoordinate.getRow();
+                if (row == 0){
+                    return new int[]{1,state};
+                }
+                break;
+            case 2:
+                playerCoordinate = player2.getPlayerCoordinate();
+                row = playerCoordinate.getRow();
+                if (row == this.b.getSize() - 1){
+                    return new int[]{1,state};
+                }
+                break;
+        }
+        return new int[] {-1, state};
     }
 
     public void makeMove(Player currentPlayer){
@@ -42,9 +62,12 @@ public class QuoridorGamplay extends GamePlay{
         }
     }
 
+
+    /* Parses the inputted string array and returns the 2 fences are are inputted */
+
     private FenceCoordinate[] getCoordinates(String[] fenceInput){
         String orientation = fenceInput[0];
-        int r1 = Integer.parseInt(fenceInput[1]);
+        int r1  = Integer.parseInt(fenceInput[1]);
         int c1 = Integer.parseInt(fenceInput[2]);
         int r2 = Integer.parseInt(fenceInput[3]);
         int c2 = Integer.parseInt(fenceInput[4]);

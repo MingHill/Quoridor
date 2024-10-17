@@ -47,8 +47,6 @@ public class Interface{
 
         while(true){
             currentGame.makeMove(this.currentPlayer);
-
-            System.out.println("MADE FIRST MOVE");
             System.out.println(this.board.toString());
 
             int[] win_outcome = currentGame.check_win(this.currentPlayer);

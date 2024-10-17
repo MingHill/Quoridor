@@ -26,6 +26,8 @@ public class Player{
 
     }
 
+    public Coordinate getPlayerCoordinate(){return this.coord;}
+
     public int getWalls_left(){return this.walls_left;}
 
     public void decreaseWall_left(){this.walls_left -= 1;}
