@@ -32,7 +32,7 @@ public class QuoridorBoard extends Board{
     }
 
     private String printRow(int r){
-        String line = "     ";
+        String line = "  ";
         for(int c = 0; c < this.getSize(); c++){
             Coordinate c1 = new Coordinate(r, c);
             Coordinate c2 = new Coordinate(r + 1, c);
@@ -45,29 +45,32 @@ public class QuoridorBoard extends Board{
     }
 
     private String printColumn(int r, int c){
-        String line = " ";
+        String line = "";
         Coordinate c1 = new Coordinate(r, c);
         Coordinate c2 = new Coordinate(r , c + 1);
         FenceCoordinate f1 = new FenceCoordinate(c1, c2);
         Fence fence = this.VerticalFences.get(f1);
-        line = line + fence.toString() + " ";
+        line = line + fence.toString();
         return line;
     }
 
-
     public String toString(){
         String output = "       ";
-        for(int i = 0; i < this.board_size; i++){
-            output = output + (i + 1) + "   ";
-        }
+        int tileCounter = 0;
+
         output = output + "\n";
         for (int r = 0; r < this.board_size; r++){
             String currentRow = this.printRow(r);
-            output = output + currentRow + "+\n   " + (r + 1);
+            output = output + currentRow + "+\n ";
             for(int c = 0; c < this.board_size; c++){
-
                 String col = this.printColumn(r, c);
-                output = output + col + this.board[r][c].toString();
+                String tileHeader = (++tileCounter) + (tileCounter < 10 ? " " : "");
+                output = output + " " + col + tileHeader;
+            }
+            output = output + " |\n ";
+            for(int c = 0; c < this.board_size; c++){
+                String col = this.printColumn(r, c);
+                output = output + " " + col + " " + this.board[r][c].toString();
             }
             if (r == 0){
                 output = output + " | P1 BASE \n";

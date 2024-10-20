@@ -8,6 +8,14 @@ public class Coordinate {
     public Coordinate(int r, int c){
         setCoordinate(r, c);
     }
+
+    public Coordinate(int tileNumber, int boardCols, int StartIndex){
+        tileNumber -= StartIndex;
+        int r = tileNumber / boardCols;
+        int c = tileNumber % boardCols;
+        setCoordinate(r, c);
+    }
+
     public String toString(){
         return "Row: " + this.row + " Col: " + this.col;
     }
