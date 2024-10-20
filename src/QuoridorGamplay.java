@@ -59,6 +59,7 @@ public class QuoridorGamplay extends GamePlay{
     public void makeMove(Player currentPlayer){
         System.out.println("Current walls left : " + currentPlayer.getWalls_left());
         int decision = getInput.inputMoveDecision(currentPlayer.getWalls_left());
+
         switch(decision){
             case 1:
                 while(true){
@@ -93,11 +94,10 @@ public class QuoridorGamplay extends GamePlay{
     }
 
     private boolean movePlayer(Player currentPlayer, int move) {
-        Coordinate playerCoordinate = currentPlayer.getPlayerCoordinate();
         Coordinate moveCoordinate = new Coordinate(move, b.getSize(), 1);
 
-        if (!isValidMove(playerCoordinate, moveCoordinate)){
-            System.out.println("Cannot move to tile " + move);
+        if (!isValidMove(currentPlayer, moveCoordinate)){
+            System.out.println("Invalid move, please try again");
             return false;
         }
 
@@ -106,7 +106,24 @@ public class QuoridorGamplay extends GamePlay{
         return true;
     }
 
-    private boolean isValidMove(Coordinate playerCoordinate, Coordinate moveCoordinate){
+    private boolean isValidMove(Player currentPlayer, Coordinate moveCoordinate) {
+        if (isValidAdjacentMove(currentPlayer, moveCoordinate)) {
+            return true;
+        }
+
+        if (isAdjacentPlayer(currentPlayer)) {
+            Player OtherPlayer = getOtherPlayer(currentPlayer);
+            if (isValidAdjacentMove(OtherPlayer, moveCoordinate)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isValidAdjacentMove(Player currentPlayer, Coordinate moveCoordinate){
+        Coordinate playerCoordinate = currentPlayer.getPlayerCoordinate();
+
         // Check for same tile move
         if (playerCoordinate.getRow() == moveCoordinate.getRow() && playerCoordinate.getCol() == moveCoordinate.getCol()){
             return false;
@@ -132,7 +149,23 @@ public class QuoridorGamplay extends GamePlay{
             return false;
         }
 
+        // Check if there is a player on the move tile
+        Coordinate otherPlayerCoordinate = getOtherPlayer(currentPlayer).getPlayerCoordinate();
+        if (otherPlayerCoordinate.getRow() == moveCoordinate.getRow() && otherPlayerCoordinate.getCol() == moveCoordinate.getCol()){
+            return false;
+        }
+
         return true;
+    }
+
+    private boolean isAdjacentPlayer(Player currentPlayer){
+        Coordinate playerCoordinate = currentPlayer.getPlayerCoordinate();
+        Coordinate otherPlayerCoordinate = getOtherPlayer(currentPlayer).getPlayerCoordinate();
+
+        int rowDiff = Math.abs(playerCoordinate.getRow() - otherPlayerCoordinate.getRow());
+        int colDiff = Math.abs(playerCoordinate.getCol() - otherPlayerCoordinate.getCol());
+
+        return (rowDiff == 1 && colDiff == 0) || (rowDiff == 0 && colDiff == 1);
     }
 
     /* Parses the inputted string array and returns the 2 fences are are inputted */
@@ -201,4 +234,13 @@ public class QuoridorGamplay extends GamePlay{
         }
         return true;
     }
+
+    public Player getOtherPlayer(Player currentPlayer){
+        if(currentPlayer.getState() == this.player1.getState()){
+            return this.player2;
+        }else{
+            return this.player1;
+        }
+    }
+
 }
