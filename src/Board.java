@@ -1,5 +1,7 @@
 package src;
 
+import java.util.HashMap;
+
 // Super class board class
 public class Board{
     protected int board_size;
@@ -114,4 +116,8 @@ public class Board{
     public void changeHorizontalFence(FenceCoordinate[] newFences){}
 
     public boolean isFenceBlocked(FenceCoordinate f) {return false;}
+    
+    public HashMap<FenceCoordinate, Fence> getInstanceofFence(boolean horizontal){
+        return null;
+    }
 }
