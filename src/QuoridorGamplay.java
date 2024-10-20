@@ -24,7 +24,7 @@ public class QuoridorGamplay extends GamePlay{
         refreshBoard();
     }
     public Player getWinner(){
-        return new Player(0, "0", 0);
+        return this.winner;
     }
 
 
@@ -40,6 +40,7 @@ public class QuoridorGamplay extends GamePlay{
                 row = playerCoordinate.getRow();
                 if (row == this.b.getSize() - 1){
                     System.out.println("Player 1 has won!");
+                    this.winner = currentPlayer;
                     return new int[]{1,state};
                 }
                 break;
@@ -47,6 +48,7 @@ public class QuoridorGamplay extends GamePlay{
                 playerCoordinate = player2.getPlayerCoordinate();
                 row = playerCoordinate.getRow();
                 if (row == 0){
+                    this.winner = currentPlayer;
                     return new int[]{1,state};
                 }
                 break;
