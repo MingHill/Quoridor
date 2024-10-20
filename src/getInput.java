@@ -132,19 +132,23 @@ public final class getInput {
 
     }
 
-    public static char inputMove() {
-        System.out.println("Input move direction (W/A/S/D): ");
-        System.out.println("W: UP, A: LEFT, S: DOWN, D: RIGHT");
-        Scanner input = new Scanner(System.in);
-        String move = input.nextLine();
-        while(!(move.equalsIgnoreCase("W") || move.equalsIgnoreCase("A")
-                || move.equalsIgnoreCase("S") || move.equalsIgnoreCase("D"))){
-            System.out.println("Please enter a valid move");
-            move = input.nextLine();
-        }
-        System.out.println("You have moved " + move);
+    public static int inputMove(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter tile number for move (" + min + " to " + max + "): ");
+            String input = scanner.nextLine().trim();
 
-        return Character.toLowerCase(move.charAt(0));
+            try {
+                int tileNumber = Integer.parseInt(input);
+                if (tileNumber >= min && tileNumber <= max) {
+                    return tileNumber;
+                } else {
+                    System.out.println("Please enter a number between " + min + " and " + max + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number or 'q' to quit.");
+            }
+        }
     }
 
     // parses the inputed fence into String array

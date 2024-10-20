@@ -105,4 +105,16 @@ public class QuoridorBoard extends Board{
         }
     }
 
+    public boolean isFenceBlocked(FenceCoordinate f) {
+        Fence fence = this.VerticalFences.get(f);
+        if (fence != null){
+            return fence.isBlock();
+        }
+        fence = this.HorizontalFences.get(f);
+        if (fence != null){
+            return fence.isBlock();
+        }
+        return false;
+    }
+
 }

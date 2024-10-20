@@ -113,4 +113,5 @@ public class Board{
 
     public void changeHorizontalFence(FenceCoordinate[] newFences){}
 
+    public boolean isFenceBlocked(FenceCoordinate f) {return false;}
 }

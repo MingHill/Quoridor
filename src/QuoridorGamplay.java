@@ -20,11 +20,7 @@ public class QuoridorGamplay extends GamePlay{
         this.b = board;
 
         Marker.SetNewSymbol(this.symbols);
-        Coordinate player1Coord = player1.getPlayerCoordinate();
-        Coordinate player2Coord = player2.getPlayerCoordinate();
-        this.b.setTile(player1Coord.getRow(), player1Coord.getCol(), 1);
-        this.b.setTile(player2Coord.getRow(), player2Coord.getCol(), 2);
-
+        refreshBoard();
     }
     public Player getWinner(){
         return new Player(0, "0", 0);
@@ -76,7 +72,7 @@ public class QuoridorGamplay extends GamePlay{
                 break;
             case 2:
                 while(true) {
-                    char move = getInput.inputMove();
+                    int move = getInput.inputMove(1, b.getSize() * b.getSize());
                     boolean moveSuccess = movePlayer(currentPlayer, move);
 
                     if (moveSuccess) {
@@ -84,46 +80,53 @@ public class QuoridorGamplay extends GamePlay{
                     }
                 }
         }
+        refreshBoard();
     }
 
-    private boolean movePlayer(Player currentPlayer, char move) {
+    private boolean movePlayer(Player currentPlayer, int move) {
         Coordinate playerCoordinate = currentPlayer.getPlayerCoordinate();
+        Coordinate moveCoordinate = new Coordinate(move, b.getSize(), 1);
 
-        int row = playerCoordinate.getRow();
-        int col = playerCoordinate.getCol();
-
-        switch (move) {
-            case 'w':
-                row -= 1;
-                break;
-            case 'a':
-                col -= 1;
-                break;
-            case 's':
-                row += 1;
-                break;
-            case 'd':
-                col += 1;
-                break;
-            default:
-                System.out.println("Invalid move direction");
-                return false;
-        }
-
-        // Check if the move is valid
-        if (row < 0 || row >= b.getSize() || col < 0 || col >= b.getSize()) {
-            System.out.println("Cannot move out of bounds");
+        if (!isValidMove(playerCoordinate, moveCoordinate)){
+            System.out.println("Cannot move to tile " + move);
             return false;
         }
 
         // Update the player's coordinate
-        currentPlayer.setPlayerCoordinate(new Coordinate(row, col));
+        currentPlayer.setPlayerCoordinate(new Coordinate(move, b.getSize(), 1));
         return true;
     }
 
+    private boolean isValidMove(Coordinate playerCoordinate, Coordinate moveCoordinate){
+        // Check for same tile move
+        if (playerCoordinate.getRow() == moveCoordinate.getRow() && playerCoordinate.getCol() == moveCoordinate.getCol()){
+            return false;
+        }
+
+        // Check that the move is within one tile
+        int rowDiff = Math.abs(playerCoordinate.getRow() - moveCoordinate.getRow());
+        int colDiff = Math.abs(playerCoordinate.getCol() - moveCoordinate.getCol());
+
+        // Check if the move is within one tile
+        if (rowDiff > 1 || colDiff > 1){
+            return false;
+        }
+
+        // Check if only moving in one direction
+        if ((rowDiff == 1) && (colDiff == 1)){
+            return false;
+        }
+
+        // Check if blocked by fence
+        FenceCoordinate f = new FenceCoordinate(playerCoordinate, moveCoordinate);
+        if (b.isFenceBlocked(f)){
+            return false;
+        }
+
+        return true;
+    }
 
     /* Parses the inputted string array and returns the 2 fences are are inputted */
-
     private FenceCoordinate[] getCoordinates(String[] fenceInput){
         String orientation = fenceInput[0];
         int r1  = Integer.parseInt(fenceInput[1]);
@@ -162,5 +165,14 @@ public class QuoridorGamplay extends GamePlay{
                 break;
         }
         return new FenceCoordinate[] {fenceCoordinate1, fenceCoordinate2};
+    }
+
+    /* Refresh the Quoridor board with current player positions */
+    private void refreshBoard(){
+        b.resetBoard();
+        Coordinate player1Coord = player1.getPlayerCoordinate();
+        Coordinate player2Coord = player2.getPlayerCoordinate();
+        this.b.setTile(player1Coord.getRow(), player1Coord.getCol(), 1);
+        this.b.setTile(player2Coord.getRow(), player2Coord.getCol(), 2);
     }
 }
