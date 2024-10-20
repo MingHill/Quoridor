@@ -1,22 +1,30 @@
 package src;
 
+import java.util.HashMap;
+
 public class QuoridorGamplay extends GamePlay{
     private Player winner;
     private Player player1;
     private Player player2;
     private Board b;
-
-
+    private static final HashMap<Integer, String> symbols = new HashMap<>();
+    static{
+        symbols.put(0, " ");
+        symbols.put(1, "\u265B");
+        symbols.put(2, "\u265A");
+    }
 
     public QuoridorGamplay(Board board, Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
         this.b = board;
 
+        Marker.SetNewSymbol(this.symbols);
         Coordinate player1Coord = player1.getPlayerCoordinate();
         Coordinate player2Coord = player2.getPlayerCoordinate();
         this.b.setTile(player1Coord.getRow(), player1Coord.getCol(), 1);
         this.b.setTile(player2Coord.getRow(), player2Coord.getCol(), 2);
+
     }
     public Player getWinner(){
         return new Player(0, "0", 0);

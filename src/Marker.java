@@ -4,7 +4,7 @@ import java.util.HashMap;
 // that that represent a marker that is placed on a tile
 public class Marker {
     private int state;
-    private static final HashMap<Integer, String> repr = new HashMap<>();
+    private static HashMap<Integer, String> repr = new HashMap<>();
 
     private static final String GREEN = "\u001B[32m";
     private static final String RESET = "\u001B[0m";
@@ -13,12 +13,15 @@ public class Marker {
 
     public Marker(int state){
         this.state = state;
+        if (repr.isEmpty()){
+            repr.put(0, " ");
+            repr.put(1, "X");
+            repr.put(2, "O");
+        }
     }
 
-    static {
-        repr.put(0, " ");
-        repr.put(1, "X");
-        repr.put(2, "O");
+    public static void SetNewSymbol(HashMap<Integer, String> newSymbol){
+        repr = newSymbol;
     }
 
     public void changeState(int state){
