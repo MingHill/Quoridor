@@ -1,5 +1,6 @@
 package src;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class QuoridorGamplay extends GamePlay{
@@ -62,16 +63,22 @@ public class QuoridorGamplay extends GamePlay{
         int decision = getInput.inputMoveDecision(currentPlayer.getWalls_left());
         switch(decision){
             case 1:
-                currentPlayer.decreaseWall_left();
-                String[] fenceInput = getInput.inputFence();
-                String orientation = fenceInput[0];
-                FenceCoordinate[] coordinates = getCoordinates(fenceInput);
+                while(true){
+                    String[] fenceInput = getInput.inputFence();
+                    int tile1 = Integer.parseInt(fenceInput[0]);
+                    int tile2 = Integer.parseInt(fenceInput[1]);
 
-                // Changes the fences on board class
-                if (orientation.equalsIgnoreCase("v")){
-                    b.changeVertFence(coordinates);
-                }else{
-                    b.changeHorizontalFence(coordinates);
+                    FenceCoordinate[] coordinates = getCoordinates(tile1, tile2);
+
+                    if(isValidFence(tile1, tile2, coordinates)){
+                        if (isHorizontal(tile1, tile2)){
+                            b.changeHorizontalFence(coordinates);
+                        }else{
+                            b.changeVertFence(coordinates);
+                        }
+                        currentPlayer.decreaseWall_left();
+                        break;
+                    }
                 }
                 break;
             case 2:
@@ -124,43 +131,59 @@ public class QuoridorGamplay extends GamePlay{
 
     /* Parses the inputted string array and returns the 2 fences are are inputted */
 
-    private FenceCoordinate[] getCoordinates(String[] fenceInput){
-        String orientation = fenceInput[0];
-        int r1  = Integer.parseInt(fenceInput[1]);
-        int c1 = Integer.parseInt(fenceInput[2]);
-        int r2 = Integer.parseInt(fenceInput[3]);
-        int c2 = Integer.parseInt(fenceInput[4]);
-        String direction = fenceInput[5].toLowerCase();
-
-        Coordinate coord1 = new Coordinate(r1, c1);
-        Coordinate coord2 = new Coordinate(r2, c2);
-        FenceCoordinate fenceCoordinate1 = new FenceCoordinate(coord1, coord2);
-
+    private FenceCoordinate[] getCoordinates(int tile1, int tile2){
+        //1 and 3 are 1 fence and 2 and 4 are another
+        Coordinate coord1 = new Coordinate(tile1, 9, 1);
+        Coordinate coord2 = new Coordinate(tile2, 9, 1);
         Coordinate coord3;
         Coordinate coord4;
-        FenceCoordinate fenceCoordinate2 = null;
-        switch(direction){
-            case "l":
-                coord3 = new Coordinate(r1, c1 - 1);
-                coord4 = new Coordinate(r2, c2 - 1);
-                fenceCoordinate2 = new FenceCoordinate(coord3, coord4);
-                break;
-            case "r":
-                coord3 = new Coordinate(r1, c1 + 1);
-                coord4 = new Coordinate(r2, c2 + 1);
-                fenceCoordinate2 = new FenceCoordinate(coord3, coord4);
-                break;
-            case "u":
-                coord3 = new Coordinate(r1 - 1, c1);
-                coord4 = new Coordinate(r2 - 1, c2 );
-                fenceCoordinate2 = new FenceCoordinate(coord3, coord4);
-                break;
-            case "d":
-                coord3 = new Coordinate(r1 + 1, c1);
-                coord4 = new Coordinate(r2 + 1, c2 );
-                fenceCoordinate2 = new FenceCoordinate(coord3, coord4);
-                break;
+
+        if(isHorizontal(tile1, tile2)){
+            coord3 = new Coordinate(coord1.getRow() + 1, coord1.getCol());
+            coord4 = new Coordinate(coord2.getRow() + 1, coord2.getCol());
+        }else{
+            coord3 = new Coordinate(coord1.getRow(), coord1.getCol() + 1);
+            coord4 = new Coordinate(coord2.getRow(), coord2.getCol() + 1);
         }
+        FenceCoordinate fenceCoordinate1 = new FenceCoordinate(coord1, coord3);
+        FenceCoordinate fenceCoordinate2 = new FenceCoordinate(coord2, coord4);
+
         return new FenceCoordinate[] {fenceCoordinate1, fenceCoordinate2};
+    }
+
+    private boolean isHorizontal(int tile1, int tile2){
+        return Math.abs(tile1 - tile2) == 1;
+    }
+
+    private boolean isValidFence(int tile1, int tile2, FenceCoordinate[] coordinates){
+
+        //Checks if the tiles exist
+        if (tile1 > 81 || tile1 < 1 || tile2 > 81 || tile2 < 1){
+            System.out.println("Invalid Tile, please choose between the range of 1 - 81");
+            return false;
+        }
+
+        //Checks if tiles are next to each other
+        if(!(Math.abs(tile1 - tile2) == 1 || Math.abs(tile1 - tile2) == 9)){
+            System.out.println("Invalid Input, please choose 2 tiles next to each other");
+            return false;
+        }
+
+        boolean isHoriz = this.isHorizontal(tile1, tile2);
+        HashMap <FenceCoordinate, Fence> instanceofFence = b.getInstanceofFence(isHoriz);
+
+        FenceCoordinate fc1 = coordinates[0];
+        FenceCoordinate fc2 = coordinates[1];
+
+        if((!instanceofFence.containsKey(fc1) || !instanceofFence.containsKey(fc2))){
+            System.out.println("Fence does not exist, remember you can't select edges");
+            return false;
+        }
+        // Checks if the fences are not already blocked
+        if (instanceofFence.get(fc1).isBlock() || instanceofFence.get(fc2).isBlock()){
+            System.out.println("Fence is already blocked, please choose a new fence");
+            return false;
+        }
+        return true;
     }
 }

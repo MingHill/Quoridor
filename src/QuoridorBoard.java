@@ -90,9 +90,8 @@ public class QuoridorBoard extends Board{
             if (fence != null){
                 fence.setBlock(true);
             }
-            System.out.println("MADE CHANGE B");
-        }
 
+        }
     }
 
     public void changeHorizontalFence(FenceCoordinate[] newFences){
@@ -101,8 +100,14 @@ public class QuoridorBoard extends Board{
             if (fence != null){
                 fence.setBlock(true);
             }
-            System.out.println("MADE CHANGE A");
         }
     }
 
+    public HashMap<FenceCoordinate, Fence> getInstanceofFence(boolean horizontal){
+        if (horizontal){
+            return this.HorizontalFences;
+        }else{
+            return this.VerticalFences;
+        }
+    }
 }

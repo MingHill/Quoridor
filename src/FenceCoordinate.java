@@ -33,4 +33,8 @@ public class FenceCoordinate {
         FenceCoordinate other = (FenceCoordinate) obj;
         return this.coordinate_one.equals(other.coordinate_one) && this.coordinate_two.equals(other.coordinate_two);
     }
+
+    public String toString(){
+        return "Coord 1: " + coordinate_one.toString() + "Coord 2: " + coordinate_two.toString();
+    }
 }
