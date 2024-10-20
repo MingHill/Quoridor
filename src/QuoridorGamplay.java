@@ -12,6 +12,11 @@ public class QuoridorGamplay extends GamePlay{
         this.player1 = player1;
         this.player2 = player2;
         this.b = board;
+
+        Coordinate player1Coord = player1.getPlayerCoordinate();
+        Coordinate player2Coord = player2.getPlayerCoordinate();
+        this.b.setTile(player1Coord.getRow(), player1Coord.getCol(), 1);
+        this.b.setTile(player2Coord.getRow(), player2Coord.getCol(), 2);
     }
     public Player getWinner(){
         return new Player(0, "0", 0);
@@ -28,14 +33,15 @@ public class QuoridorGamplay extends GamePlay{
             case 1:
                 playerCoordinate = player1.getPlayerCoordinate();
                 row = playerCoordinate.getRow();
-                if (row == 0){
+                if (row == this.b.getSize() - 1){
+                    System.out.println("Player 1 has won!");
                     return new int[]{1,state};
                 }
                 break;
             case 2:
                 playerCoordinate = player2.getPlayerCoordinate();
                 row = playerCoordinate.getRow();
-                if (row == this.b.getSize() - 1){
+                if (row == 0){
                     return new int[]{1,state};
                 }
                 break;
@@ -61,7 +67,50 @@ public class QuoridorGamplay extends GamePlay{
                 }
                 break;
             case 2:
+                while(true) {
+                    char move = getInput.inputMove();
+                    boolean moveSuccess = movePlayer(currentPlayer, move);
+
+                    if (moveSuccess) {
+                        break;
+                    }
+                }
         }
+    }
+
+    private boolean movePlayer(Player currentPlayer, char move) {
+        Coordinate playerCoordinate = currentPlayer.getPlayerCoordinate();
+
+        int row = playerCoordinate.getRow();
+        int col = playerCoordinate.getCol();
+
+        switch (move) {
+            case 'w':
+                row -= 1;
+                break;
+            case 'a':
+                col -= 1;
+                break;
+            case 's':
+                row += 1;
+                break;
+            case 'd':
+                col += 1;
+                break;
+            default:
+                System.out.println("Invalid move direction");
+                return false;
+        }
+
+        // Check if the move is valid
+        if (row < 0 || row >= b.getSize() || col < 0 || col >= b.getSize()) {
+            System.out.println("Cannot move out of bounds");
+            return false;
+        }
+
+        // Update the player's coordinate
+        currentPlayer.setPlayerCoordinate(new Coordinate(row, col));
+        return true;
     }
 
 

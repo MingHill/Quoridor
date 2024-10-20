@@ -132,6 +132,21 @@ public final class getInput {
 
     }
 
+    public static char inputMove() {
+        System.out.println("Input move direction (W/A/S/D): ");
+        System.out.println("W: UP, A: LEFT, S: DOWN, D: RIGHT");
+        Scanner input = new Scanner(System.in);
+        String move = input.nextLine();
+        while(!(move.equalsIgnoreCase("W") || move.equalsIgnoreCase("A")
+                || move.equalsIgnoreCase("S") || move.equalsIgnoreCase("D"))){
+            System.out.println("Please enter a valid move");
+            move = input.nextLine();
+        }
+        System.out.println("You have moved " + move);
+
+        return Character.toLowerCase(move.charAt(0));
+    }
+
     // parses the inputed fence into String array
     private static String[] parseFence(String fence) {
         // Corrected regex with capturing groups

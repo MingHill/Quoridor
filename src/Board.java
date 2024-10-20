@@ -39,6 +39,10 @@ public class Board{
         return this.board[r][c];
     }
 
+    public void setTile(int r, int c, int state){
+        this.board[r][c].changeState(state);
+    }
+
     // return true if board is full and false otherwise
     public boolean is_full(){ // checks if the current board is full
         for(int r = 0; r < this.board_size; r++){

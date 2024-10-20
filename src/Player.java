@@ -16,16 +16,13 @@ public class Player{
         this.name = player_name;
         this.GameID = GameID;
         this.walls_left = 10;
-        this.setPlayerCoordinate();
+
+        Coordinate startCoord = new Coordinate(state == 1 ? 0 : 8, 4);
+        this.setPlayerCoordinate(startCoord);
     }
 
-    private void setPlayerCoordinate(){
-        if (this.state == 1){
-            this.coord = new Coordinate(0,5);
-        }else{
-            this.coord = new Coordinate(9, 5);
-        }
-
+    public void setPlayerCoordinate(Coordinate coord){
+        this.coord = coord;
     }
 
     public Coordinate getPlayerCoordinate(){return this.coord;}
