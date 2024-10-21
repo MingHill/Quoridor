@@ -123,13 +123,14 @@ public final class getInput {
         System.out.println("To place a horizontal wall, the walls will be placed below the 2 numbers. ");
         System.out.println("To place a vertical wall, the walls will be placed to the right of the 2 numbers");
 
-        Scanner input = new Scanner(System.in);
-        String fence = input.nextLine();
-        if (!isValidFenceFormat(fence)) {
-            input = new Scanner(System.in);
-            fence = input.nextLine();
+        while (true) {
+            Scanner input = new Scanner(System.in);
+            String fence = input.nextLine();
+
+            if (isValidFenceFormat(fence)) {
+                return parseFence(fence);
+            }
         }
-        return parseFence(fence);
     }
 
     public static int inputMove(int min, int max) {
@@ -146,7 +147,7 @@ public final class getInput {
                     System.out.println("Please enter a number between " + min + " and " + max + ".");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number or 'q' to quit.");
+                System.out.println("Invalid input.");
             }
         }
     }
