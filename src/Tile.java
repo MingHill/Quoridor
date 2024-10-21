@@ -4,6 +4,7 @@ import java.util.HashMap;
 // class that represents a single tile on the board class
 public class Tile{
      private Marker marker; // 0 = empty, 1 = player 1, 2 = player 2
+
      private Coordinate coordinate; //src.Coordinate class to keep track of location of tile
      public static final HashMap<Integer, String> map = new HashMap<>();
 
@@ -16,7 +17,7 @@ public class Tile{
 
      //changes the state of tile, throws exception if new state is not valid
      public void changeState(int state_change){
-        if (state_change < 0 || state_change > 2){
+        if (state_change < 0 || state_change > 3){
             throw new IllegalArgumentException();
         }
         this.marker.changeState(state_change);

@@ -76,6 +76,7 @@ public class TTTGamePlay extends GamePlay {
     }
 
     public void makeMove(Player currentPlayer){
+        System.out.println(this.b.toString());
         int marker = currentPlayer.getState();
         String prompt = currentPlayer.getName() + ". " + "Please enter your coordinates: ";
         Coordinate newMove = getInput.inputCoord(prompt);

@@ -80,6 +80,7 @@ public class SuperGamePlay extends GamePlay{
 
 
     public void makeMove(Player currentPlayer){
+        System.out.println(this.b.toString());
         int marker = currentPlayer.getState();
         String prompt = currentPlayer.getName() + ". " + "Please enter your coordinates in the format (A x,y) where A is a value between A/a - I/i and x = row and y = column";
         int[] newMove = getInput.inputSuperCoord(prompt);

@@ -13,6 +13,7 @@ public class QuoridorGamplay extends GamePlay{
         symbols.put(0, " ");
         symbols.put(1, "\u265B");
         symbols.put(2, "\u265A");
+        symbols.put(3, "X");
     }
 
     public QuoridorGamplay(Board board, Player player1, Player player2) {
@@ -57,6 +58,8 @@ public class QuoridorGamplay extends GamePlay{
     }
 
     public void makeMove(Player currentPlayer){
+        markValidMoves(currentPlayer);
+        System.out.println(this.b.toString());
         System.out.println("Current walls left : " + currentPlayer.getWalls_left());
         int decision = getInput.inputMoveDecision(currentPlayer.getWalls_left());
 
@@ -106,6 +109,21 @@ public class QuoridorGamplay extends GamePlay{
         return true;
     }
 
+    private void markValidMoves(Player currentPlayer){
+        Coordinate playerCoordinate = currentPlayer.getPlayerCoordinate();
+        int row = playerCoordinate.getRow();
+        int col = playerCoordinate.getCol();
+
+        for (int i = 0; i < b.getSize(); i++){
+            for (int j = 0; j < b.getSize(); j++){
+                Coordinate moveCoordinate = new Coordinate(i, j);
+                if (isValidMove(currentPlayer, moveCoordinate)){
+                    b.setTile(i, j, 3);
+                }
+            }
+        }
+    }
+
     private boolean isValidMove(Player currentPlayer, Coordinate moveCoordinate) {
         if (isValidAdjacentMove(currentPlayer, moveCoordinate)) {
             return true;
@@ -144,8 +162,9 @@ public class QuoridorGamplay extends GamePlay{
         }
 
         // Check if blocked by fence
-        FenceCoordinate f = new FenceCoordinate(playerCoordinate, moveCoordinate);
-        if (b.isFenceBlocked(f)){
+        FenceCoordinate f1 = new FenceCoordinate(playerCoordinate, moveCoordinate);
+        FenceCoordinate f2 = new FenceCoordinate(moveCoordinate, playerCoordinate);
+        if (b.isFenceBlocked(f1) || b.isFenceBlocked(f2)){
             return false;
         }
 

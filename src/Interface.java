@@ -45,11 +45,9 @@ public class Interface{
                 break;
 
         }
-        System.out.println(this.board.toString());
 
         while(true){
             currentGame.makeMove(this.currentPlayer);
-            System.out.println(this.board.toString());
 
             int[] win_outcome = currentGame.check_win(this.currentPlayer);
             if(win_outcome[0] > 0){

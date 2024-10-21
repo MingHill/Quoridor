@@ -6,6 +6,9 @@ public class QuoridorBoard extends Board{
     private HashMap<FenceCoordinate, Fence> HorizontalFences = new HashMap<> ();
     private HashMap<FenceCoordinate, Fence> VerticalFences = new HashMap<>();
 
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+
     public QuoridorBoard(){
         super(9);
         this.initializeFences();
@@ -55,32 +58,29 @@ public class QuoridorBoard extends Board{
     }
 
     public String toString(){
-        String output = "       ";
+        String output = ANSI_BLUE + "\n  +---+---+---+---+---+---+---+---+---+\n " + ANSI_RESET;
         int tileCounter = 0;
-
-        output = output + "\n";
         for (int r = 0; r < this.board_size; r++){
-            String currentRow = this.printRow(r);
-            output = output + currentRow + "+\n ";
             for(int c = 0; c < this.board_size; c++){
                 String col = this.printColumn(r, c);
                 String tileHeader = (++tileCounter) + (tileCounter < 10 ? " " : "");
                 output = output + " " + col + tileHeader;
             }
-            output = output + " |\n ";
+            output = output + ANSI_BLUE + " |\n " + ANSI_RESET;
             for(int c = 0; c < this.board_size; c++){
                 String col = this.printColumn(r, c);
                 output = output + " " + col + " " + this.board[r][c].toString();
             }
             if (r == 0){
-                output = output + " | P1 BASE \n";
+                output = output + ANSI_BLUE + " | " + ANSI_RESET + "P1 BASE \n";
             }else if(r == this.getSize() - 1){
-                output = output + " | P2 BASE \n";
+                output = output + ANSI_BLUE + " | " + ANSI_RESET +  "P2 BASE \n";
             }else {
-                output = output + " |\n";
+                output = output + ANSI_BLUE + " |\n" + ANSI_RESET;
             }
+            String currentRow = this.printRow(r);
+            output = output + currentRow + ANSI_BLUE + "+\n " + ANSI_RESET;
         }
-        output = output + this.printRow(this.getSize() - 1) + "+";
         return output;
     }
 
