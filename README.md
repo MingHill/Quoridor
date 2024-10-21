@@ -12,6 +12,18 @@
 ## Files
 ---------------------------------------------------------------------------
 This section should be all of the source code files that have a .java extension. You should also include a brief description of what the class does.
+
+New Classes:
+- src.QuoridorGamePlay.java
+  - Extends the gameplay class and implements logic and rules for Quoridor.
+- src.QuoridorBoard.java
+  - Inherits the board class and automatically creates a 9x9 board for Quoridor.
+- src.Fence.java
+  - Fence class that represents a fence. Stores the coordinates and orientation of a fence (horizontal/vertical), along with it’s state (blocked or unblocked).
+- src.FenceCoordinate.java
+  - A simple class that keeps track of the fence coordinate within the board.
+
+Previously added:
  - AudioPlayer.java
    - AudioPlayer is a class that plays music during the game. It starts when it is called by src.Main and ends when the players decide to stop playing. 
  - src.Board.java 
@@ -47,6 +59,24 @@ This section should be all of the source code files that have a .java extension.
 
 ## Notes
 ---------------------------------------------------------------------------
+- ASCII art displayed when a player wins any game.
+- Background music plays during gameplay.
+- A BFS check is added to prevent the game from becoming unwinnable for any player.
+- Valid move options for each player within Quoridor are marked with an "X". Jump-over-player mechanics have also been implemented, and displayed using these markers.
+  ```
+  +---+---+---+---+---+---+---+---+---+
+  | 64| 65| 66| 67| 68| 69| 70| 71| 72|
+  |   |   |   |   | X |   |   |   |   |
+  +---+---+---+---+---+---+---+---+---+
+  | 73| 74| 75| 76| 77| 78| 79| 80| 81|
+  |   |   |   | X | ♚ | X |   |   |   |  P2 BASE
+  +---+---+---+---+---+---+---+---+---+
+  ```
+
+
+How we merged our assignments: 
+- We decided to implement Ming’s code base. Our decision to do this was based on the fact that we had similar implementations for our previous assignments and it would have been easier to just go off one.
+- For this assignment, we did not make any major modifications. Instead, we extended some classes and created a Fence/FenceCoordinate class to work with our new game. We did not alter much of the high-level design/classes but added much lower-level stuff. 
 
 
 ## How to compile and run
