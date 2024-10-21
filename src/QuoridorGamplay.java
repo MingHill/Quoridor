@@ -1,9 +1,6 @@
 package src;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Queue;
+import java.util.*;
 
 public class QuoridorGamplay extends GamePlay{
     private Player winner;
@@ -273,29 +270,40 @@ public class QuoridorGamplay extends GamePlay{
         Coordinate startCoord = player.getPlayerCoordinate();
 
         Queue<Coordinate> queue = new ArrayDeque<>();
+        Set<Coordinate> vis = new HashSet<Coordinate>();
+
         queue.add(startCoord);
+        vis.add(startCoord);
+
         while (!queue.isEmpty()){
             Coordinate currentCoord = queue.remove();
             int row = currentCoord.getRow();
             switch(player.getState()){
                 case 1:
                     if (row == b.getSize() - 1){
+                        if (isHoriz){
+                            b.changeHorizontalFence(fenceCoordinates, true);
+                        }else{
+                            b.changeVertFence(fenceCoordinates, true);
+                        }
                         return true;
                     }
                     break;
                 case 2:
                     if (row == 0) {
+                        if (isHoriz){
+                            b.changeHorizontalFence(fenceCoordinates, true);
+                        }else{
+                            b.changeVertFence(fenceCoordinates, true);
+                        }
                         return true;
                     }
                     break;
             }
             for (Coordinate coord : this.all_coords){
-                if(coord == null){
-                    System.out.println("Coord is null");
-                }
-                if (isValidMove(currentCoord, coord)){
-
+                if (!vis.contains(coord) && isValidMove(currentCoord, coord)){
                     queue.add(coord);
+                    vis.add(coord);
                 }
             }
         }
@@ -304,10 +312,12 @@ public class QuoridorGamplay extends GamePlay{
         }else{
             b.changeVertFence(fenceCoordinates, true);
         }
+
         return false;
     }
 
     private boolean isValidMove(Coordinate originCoordinate, Coordinate moveCoordinate){
+        if(originCoordinate.equals(moveCoordinate)){}
         if (originCoordinate.getRow() == moveCoordinate.getRow() && originCoordinate.getCol() == moveCoordinate.getCol()){
             return false;
         }
