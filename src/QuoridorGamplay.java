@@ -1,13 +1,16 @@
 package src;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Queue;
 
 public class QuoridorGamplay extends GamePlay{
     private Player winner;
     private Player player1;
     private Player player2;
     private Board b;
+    private Coordinate[] all_coords;
     private static final HashMap<Integer, String> symbols = new HashMap<>();
     static{
         symbols.put(0, " ");
@@ -22,6 +25,7 @@ public class QuoridorGamplay extends GamePlay{
 
         Marker.SetNewSymbol(this.symbols);
         refreshBoard();
+        this.all_coords = this.getSurroundingCoords();
     }
     public Player getWinner(){
         return this.winner;
@@ -71,9 +75,9 @@ public class QuoridorGamplay extends GamePlay{
 
                     if(isValidFence(tile1, tile2, coordinates)){
                         if (isHorizontal(tile1, tile2)){
-                            b.changeHorizontalFence(coordinates);
+                            b.changeHorizontalFence(coordinates, false);
                         }else{
-                            b.changeVertFence(coordinates);
+                            b.changeVertFence(coordinates, false);
                         }
                         currentPlayer.decreaseWall_left();
                         break;
@@ -232,8 +236,101 @@ public class QuoridorGamplay extends GamePlay{
             System.out.println("Fence is already blocked, please choose a new fence");
             return false;
         }
+
+        if (!BFS(coordinates, isHoriz, this.player1) || !BFS(coordinates, isHoriz, this.player2)){
+            System.out.println("You can't place fence that results in a stalemate");
+            return false;
+        }
         return true;
     }
+
+    private boolean BFS(FenceCoordinate[] fenceCoordinates, boolean isHoriz, Player player){
+        if (isHoriz){
+            b.changeHorizontalFence(fenceCoordinates, false);
+        }else{
+            b.changeVertFence(fenceCoordinates, false);
+        }
+
+        Coordinate startCoord = player.getPlayerCoordinate();
+
+        Queue<Coordinate> queue = new ArrayDeque<>();
+        queue.add(startCoord);
+        while (!queue.isEmpty()){
+            Coordinate currentCoord = queue.remove();
+            int row = currentCoord.getRow();
+            switch(player.getState()){
+                case 1:
+                    if (row == b.getSize() - 1){
+                        return true;
+                    }
+                    break;
+                case 2:
+                    if (row == 0) {
+                        return true;
+                    }
+                    break;
+            }
+            for (Coordinate coord : this.all_coords){
+                if(coord == null){
+                    System.out.println("Coord is null");
+                }
+                if (isValidMove(currentCoord, coord)){
+
+                    queue.add(coord);
+                }
+            }
+        }
+        if (isHoriz){
+            b.changeHorizontalFence(fenceCoordinates, true);
+        }else{
+            b.changeVertFence(fenceCoordinates, true);
+        }
+        return false;
+    }
+
+    private boolean isValidMove(Coordinate originCoordinate, Coordinate moveCoordinate){
+        if (originCoordinate.getRow() == moveCoordinate.getRow() && originCoordinate.getCol() == moveCoordinate.getCol()){
+            return false;
+        }
+
+        // Check that the move is within one tile
+        int rowDiff = Math.abs(originCoordinate.getRow() - moveCoordinate.getRow());
+        int colDiff = Math.abs(originCoordinate.getCol() - moveCoordinate.getCol());
+
+        // Check if the move is within one tile
+        if (rowDiff > 1 || colDiff > 1){
+            return false;
+        }
+
+        // Check if only moving in one direction
+        if ((rowDiff == 1) && (colDiff == 1)){
+            return false;
+        }
+
+        // Check if blocked by fence
+        FenceCoordinate f1 = new FenceCoordinate(originCoordinate, moveCoordinate);
+        FenceCoordinate f2 = new FenceCoordinate(moveCoordinate, originCoordinate);
+        if (b.isFenceBlocked(f1) || b.isFenceBlocked(f2)){
+            return false;
+        }
+        return true;
+    }
+
+
+
+
+    private Coordinate[] getSurroundingCoords(){
+        Coordinate[] surroundingCoords = new Coordinate[81];
+        int counter = 0;
+        for(int r = 0; r < b.getSize(); r++){
+            for(int c = 0; c < b.getSize(); c++){
+                surroundingCoords[counter] = new Coordinate(r, c);
+                counter++;
+            }
+        }
+        return surroundingCoords;
+    }
+
 
     public Player getOtherPlayer(Player currentPlayer){
         if(currentPlayer.getState() == this.player1.getState()){
@@ -242,5 +339,6 @@ public class QuoridorGamplay extends GamePlay{
             return this.player1;
         }
     }
+
 
 }

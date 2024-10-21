@@ -84,24 +84,33 @@ public class QuoridorBoard extends Board{
         return output;
     }
 
-    public void changeVertFence(FenceCoordinate[] newFences){
+    public void changeVertFence(FenceCoordinate[] newFences, boolean remove){
         for(FenceCoordinate f : newFences){
             Fence fence = this.VerticalFences.get(f);
             if (fence != null){
-                fence.setBlock(true);
+                if(remove){
+                    fence.setBlock(false);
+                }else{
+                    fence.setBlock(true);
+                }
             }
-
         }
     }
 
-    public void changeHorizontalFence(FenceCoordinate[] newFences){
+    public void changeHorizontalFence(FenceCoordinate[] newFences, boolean remove){
         for(FenceCoordinate f : newFences){
             Fence fence = this.HorizontalFences.get(f);
             if (fence != null){
-                fence.setBlock(true);
+                if(remove){
+                    fence.setBlock(false);
+                }else{
+                    fence.setBlock(true);
+                }
             }
         }
     }
+
+
 
     public boolean isFenceBlocked(FenceCoordinate f) {
         Fence fence = this.VerticalFences.get(f);
