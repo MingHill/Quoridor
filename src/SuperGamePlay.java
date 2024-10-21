@@ -1,17 +1,27 @@
 package src;
 
+import java.util.HashMap;
+
 // Logic and rules for super tic tac toe
 public class SuperGamePlay extends GamePlay{
     private Board b;
     private Player player1;
     private Player player2;
     private Player winner;
-
+    private static final HashMap<Integer, String> symbols = new HashMap<>();
+    static{
+        symbols.put(0, " ");
+        symbols.put(1, "X");
+        symbols.put(2, "0");
+        symbols.put(3, "X");
+    }
 
     public SuperGamePlay(Board board, Player player1, Player player2) {
+        Marker.SetNewSymbol(this.symbols);
         this.b = board;
         this.player1 = player1;
         this.player2 = player2;
+
     }
 
     public int[] check_win(Player currentPlayer){

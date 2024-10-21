@@ -1,12 +1,22 @@
 package src;
 
+import java.util.HashMap;
+
 // Rules and Logic for Order and Chaos
 public class OCGamePlay extends GamePlay{
     Board b;
     Player player1;
     Player player2;
     Player winner;
+    private static final HashMap<Integer, String> symbols = new HashMap<>();
+    static{
+        symbols.put(0, " ");
+        symbols.put(1, "X");
+        symbols.put(2, "0");
+        symbols.put(3, "X");
+    }
     public OCGamePlay(Board board, Player player1, Player player2) {
+        Marker.SetNewSymbol(this.symbols);
         this.b = board;
         this.player1 = player1;
         this.player2 = player2;
