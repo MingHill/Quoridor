@@ -52,6 +52,7 @@ public class Interface{
             int[] win_outcome = currentGame.check_win(this.currentPlayer);
             if(win_outcome[0] > 0){
                 System.out.println("GAME OVER! " + currentGame.getWinner().getName() + " has won!");
+                this.printWin();
                 this.score[currentGame.getWinner().getState() - 1]++;
                 System.out.println("The score is now " + this.player1.getName() + ": " + this.score[0] + " | " + this.player2.getName() + ": " + this.score[1]);
                 this.endGame();
@@ -74,6 +75,19 @@ public class Interface{
             this.currentPlayer = this.player1;
         }
     }
+
+
+    public void printWin() {
+            System.out.println("██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗   ██╗    ██╗    ██╗");
+            System.out.println("╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██║████╗  ██║    ██║    ██║");
+            System.out.println(" ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║██╔██╗ ██║    ██║    ██║");
+            System.out.println("  ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║██║╚██╗██║    ╚═╝    ╚═╝");
+            System.out.println("   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║    ██╗    ██╗");
+            System.out.println("   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝    ╚═╝    ╚═╝");
+            System.out.println("                                                                     ");
+    }
+
+
 
     //called when there is either a tie or winner of a game, asks players to restart or end game
     public void endGame(){

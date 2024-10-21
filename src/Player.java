@@ -55,15 +55,15 @@ public class Player{
         String name;
         if (GameID == 2){
             if (player_num == 1){
-                name = "src.Player Order";
+                name = "Player Order";
             }else{
-                name = "src.Player Chaos";
+                name = "Player Chaos";
             }
         }else{
             if (player_num == 1){
-                name = "src.Player X";
+                name = "Player X";
             }else{
-                name = "src.Player O";
+                name = "Player O";
             }
         }
         return new Player(player_num,name,GameID);
