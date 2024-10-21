@@ -120,8 +120,8 @@ public final class getInput {
     // Gets input for fence
     public static String[] inputFence() {
         System.out.println("Input the fence you want to block in the following format: N1, N2");
-        System.out.println("To place a horizontal wall, the walls will be placed above the 2 numbers. ");
-        System.out.println("To place a vertical wall, the walls will be placed to the left of the 2 numbers");
+        System.out.println("To place a horizontal wall, the walls will be placed below the 2 numbers. ");
+        System.out.println("To place a vertical wall, the walls will be placed to the right of the 2 numbers");
 
         Scanner input = new Scanner(System.in);
         String fence = input.nextLine();

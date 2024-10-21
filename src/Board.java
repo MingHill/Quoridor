@@ -111,9 +111,9 @@ public class Board{
         }
     }
 
-    public void changeVertFence(FenceCoordinate[] newFences){}
+    public void changeVertFence(FenceCoordinate[] newFences, boolean remove){}
 
-    public void changeHorizontalFence(FenceCoordinate[] newFences){}
+    public void changeHorizontalFence(FenceCoordinate[] newFences, boolean remove){}
 
     public boolean isFenceBlocked(FenceCoordinate f) {return false;}
     
