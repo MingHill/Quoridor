@@ -61,22 +61,23 @@ public class QuoridorBoard extends Board{
         String output = ANSI_BLUE + "\n  +---+---+---+---+---+---+---+---+---+\n " + ANSI_RESET;
         int tileCounter = 0;
         for (int r = 0; r < this.board_size; r++){
+            output = output + ANSI_BLUE + " | " + ANSI_RESET;
             for(int c = 0; c < this.board_size; c++){
                 String col = this.printColumn(r, c);
                 String tileHeader = (++tileCounter) + (tileCounter < 10 ? " " : "");
-                output = output + " " + col + tileHeader;
+                output = output + tileHeader + col + " ";
             }
-            output = output + ANSI_BLUE + " |\n " + ANSI_RESET;
+            output = output + "\n " + ANSI_BLUE + " | " + ANSI_RESET;
             for(int c = 0; c < this.board_size; c++){
                 String col = this.printColumn(r, c);
-                output = output + " " + col + " " + this.board[r][c].toString();
+                output = output + this.board[r][c].toString() + " " + col + " ";
             }
             if (r == 0){
-                output = output + ANSI_BLUE + " | " + ANSI_RESET + "P1 BASE \n";
+                output = output + " P1 BASE \n";
             }else if(r == this.getSize() - 1){
-                output = output + ANSI_BLUE + " | " + ANSI_RESET +  "P2 BASE \n";
+                output = output + " P2 BASE \n";
             }else {
-                output = output + ANSI_BLUE + " |\n" + ANSI_RESET;
+                output = output + "\n";
             }
             String currentRow = this.printRow(r);
             output = output + currentRow + ANSI_BLUE + "+\n " + ANSI_RESET;
